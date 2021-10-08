@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Units Calculator</string>
+    <string name="length_button">Length</string>
+    <string name="area_button">Area</string>
+    <string name="volume_button">Volume</string>
+    <string name="mass_button">Mass</string>
+    <string name="time_button">Time</string>
+    <string name="speed_button">Speed</string>
+</resources>
