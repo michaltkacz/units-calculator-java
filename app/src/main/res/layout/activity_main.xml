@@ -42,6 +42,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ic_baseline_straighten_96"
                     android:outlineProvider="bounds"
+                    android:onClick="GoToLengthView"
                     android:text="@string/length_button"
                     android:textSize="20sp" />
 
@@ -57,6 +58,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ic_baseline_square_foot_96"
                     android:outlineProvider="bounds"
+                    android:onClick="GoToAreaView"
                     android:text="@string/area_button"
                     android:textSize="20sp" />
 
@@ -80,6 +82,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ic_baseline_opacity_96"
                     android:outlineProvider="bounds"
+                    android:onClick="GoToVolumeView"
                     android:text="@string/volume_button"
                     android:textSize="20sp" />
 
@@ -95,6 +98,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ic_baseline_fitness_center_96"
                     android:outlineProvider="bounds"
+                    android:onClick="GoToMassView"
                     android:text="@string/mass_button"
                     android:textSize="20sp" />
 
@@ -118,6 +122,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ic_baseline_timer_96"
                     android:outlineProvider="bounds"
+                    android:onClick="GoToTimeView"
                     android:text="@string/time_button"
                     android:textSize="20sp" />
 
@@ -133,6 +138,7 @@
                     android:layout_weight="0.5"
                     android:drawableTop="@drawable/ic_baseline_speed_96"
                     android:outlineProvider="bounds"
+                    android:onClick="GoToSpeedView"
                     android:text="@string/speed_button"
                     android:textSize="20sp" />
 
