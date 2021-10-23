@@ -7,12 +7,19 @@ public class UnitMapCollections {
 
     private static HashMap<String, Double> currentSelectedUnit;
 
+    private static String title;
+
     public static HashMap<String,Double> getCurrentUnitKind(){
         return currentSelectedUnit;
     }
 
+    public static String getTitle() { return title;}
+
     public static void setCurrentUnitKind(HashMap<String,Double> unitKind){
         currentSelectedUnit = unitKind;
+    }
+    public static void setTitle(String newTitle){
+        title = newTitle;
     }
 
     public static HashMap<String,Double> lengthUnitDictionary = new HashMap<String,Double>() {
