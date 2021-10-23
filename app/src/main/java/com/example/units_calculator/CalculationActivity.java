@@ -1,95 +1,58 @@
 package com.example.units_calculator;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.InputType;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import java.util.List;
+import java.util.Map;
 
 public class CalculationActivity extends AppCompatActivity {
-    private UnitCalculator m_unitCalculator;
-    private Spinner currentUnit;
-    private Spinner newUnit;
-    private EditText valueEditText;
-    private EditText newValueEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculation);
-        m_unitCalculator = new UnitCalculator(UnitMapCollections.getCurrentUnitKind());
+        //AddLayoutsPerUnit();
 
-        currentUnit = (Spinner) findViewById(R.id.currentUnitSpinner);
-        newUnit = (Spinner) findViewById(R.id.newUnitSpinner);
-        valueEditText = (EditText) findViewById(R.id.editTextNumber);
-        newValueEditText = (EditText) findViewById(R.id.editTextResult);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, m_unitCalculator.GetUnits().toArray(new String[0]));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        currentUnit.setAdapter(adapter);
-        newUnit.setAdapter(adapter);
-
-
-        currentUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Calculate();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
-
-        newUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Calculate();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                return;
-            }
-        });
-        valueEditText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Calculate();
-            }
-        });
+        AddLayoutsPerUnit();
     }
-    private void Calculate(){
 
-        double x;
-        try{
-            x = Double.parseDouble(valueEditText.getText().toString());
+
+
+
+
+    private void AddLayoutsPerUnit(){
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.CalculationLayout);
+        if(linearLayout == null)
+            return;
+
+        for (Map.Entry<String,Double> unit : UnitMapCollections.getCurrentUnitKind().entrySet()) {
+            LinearLayout newUnitLayout = new LinearLayout(this);
+            newUnitLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120));
+
+            EditText editText = new EditText(this);
+            editText.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.8f));
+            editText.setMinHeight(48);
+            editText.setTextSize(20);
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            editText.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            newUnitLayout.addView(editText);
+
+            TextView titleView = new TextView(this);
+            titleView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.2f));
+            titleView.setTextSize(20);
+            titleView.setText(unit.getKey());
+            newUnitLayout.addView(titleView);
+
+            linearLayout.addView(newUnitLayout);
         }
-        catch(Exception e){
-            x =0.0;
-        }
-        String y =currentUnit.getSelectedItem().toString();
-        String j = newUnit.getSelectedItem().toString();
-        newValueEditText.setText(String.valueOf(m_unitCalculator.Calculate(x,y,j)));
+        linearLayout.invalidate();
     }
 }
