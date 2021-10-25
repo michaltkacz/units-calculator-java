@@ -54,7 +54,11 @@ public class CalculationActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (editText.hasFocus()) {
-                    value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),unit,defaultValue);
+                    try {
+                        value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),unit,defaultValue);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     UpdateAllTextEdits();
                 }
             }
