@@ -78,15 +78,15 @@ public class UnitMapCollections {
     public static HashMap<String,Double> timeUnitDictionary = new HashMap<String,Double>() {
         {
             put("s", 1.0);
-            put("ms", 0.0001);
-            put("μs", 0.0000001);
-            put("ns", 1.0000000001);
+            put("ms", 0.001);
+            put("μs", 0.000001);
+            put("ns", 0.000000001);
             put("Min", 60.0);
             put("Hour", 3600.0);
             put("Day", 86400.0);
             put("Week", 604800.0);
             put("Month", 2629800.0);
-            put("Month", 31557600.0);
+            put("Year", 31557600.0);
         }
     };
 

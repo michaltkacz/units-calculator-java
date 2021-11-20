@@ -8,18 +8,26 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.material.transition.platform.SlideDistanceProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CalculationActivity extends AppCompatActivity {
 
-    private String defaultValue;
+    private String defaultUnit;
+    private String selectedUnit;
+    private Spinner spinner;
+    private EditText editText;
     private double value = 0;
-    private HashMap<String,EditText> editTextArray;
+    private HashMap<String,TextView> editTextArray;
     private UnitCalculator unitCalculator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +39,43 @@ public class CalculationActivity extends AppCompatActivity {
 
     }
 
+    public void GoToMainPage(View view){
+        finish();
+    }
     private void AddTitle() {
         TextView textView = (TextView) findViewById(R.id.Title);
         textView.setText(UnitMapCollections.getTitle());
         textView.invalidate();
     }
 
-    private void UpdateAllTextEdits(){
-        for (Map.Entry<String,EditText> unit : editTextArray.entrySet()){
-            if(!unit.getValue().hasFocus())
-                unit.getValue().setText(String.valueOf(unitCalculator.Calculate(value,defaultValue, String.valueOf(unit.getKey()))));
+    private void UpdateAllTextValues(){
+        for (Map.Entry<String,TextView> unit : editTextArray.entrySet()){
+            unit.getValue().setText(String.format("%.8f",unitCalculator.Calculate(value,defaultUnit, String.valueOf(unit.getKey()))));
         }
     }
 
-    private void AddListenerToEditText(EditText editText,String unit){
+    private void AddListenerToSpinner(Spinner spinner){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                selectedUnit = UnitMapCollections.getCurrentUnitKind().keySet().toArray()[position].toString();
+                try {
+                    value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),selectedUnit,defaultUnit);
+                } catch (Exception e) {
+                    value = 0;
+                    System.out.println(e.getMessage());
+                }
+                UpdateAllTextValues();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                return;
+            }
+        });
+    }
+
+    private void AddListenerToEditText(EditText editText){
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -53,14 +84,13 @@ public class CalculationActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (editText.hasFocus()) {
-                    try {
-                        value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),unit,defaultValue);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    UpdateAllTextEdits();
+                try {
+                    value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),selectedUnit,defaultUnit);
+                } catch (Exception e) {
+                    value = 0;
+                    System.out.println(e.getMessage());
                 }
+                UpdateAllTextValues();
             }
 
             @Override
@@ -72,34 +102,39 @@ public class CalculationActivity extends AppCompatActivity {
 
     private void AddLayoutsPerUnit(){
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.CalculationLayout);
-        editTextArray = new HashMap<String,EditText>();
+        editTextArray = new HashMap<String,TextView>();
+
+        spinner = (Spinner)findViewById(R.id.spinner);
+        AddListenerToSpinner(spinner);
+        spinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,UnitMapCollections.getCurrentUnitKind().keySet().toArray()));
+        editText = (EditText) findViewById(R.id.editUnitText);
+        AddListenerToEditText(editText);
+
         if(linearLayout == null)
             return;
 
         for (Map.Entry<String,Double> unit : UnitMapCollections.getCurrentUnitKind().entrySet()) {
             if(unit.getValue() == 1){
-                defaultValue = unit.getKey();
+                defaultUnit = unit.getKey();
             }
             LinearLayout newUnitLayout = new LinearLayout(this);
             newUnitLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-            EditText editText = new EditText(this);
-            editText.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.8f));
-            editText.setMinHeight(48);
-            editText.setTextSize(18);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            editText.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-            editText.setText(String.valueOf(value));
-            editTextArray.put(unit.getKey(),editText);
-            AddListenerToEditText(editText,unit.getKey());
-            newUnitLayout.addView(editText);
+            TextView valueView = new TextView(this);
+            valueView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.7f));
+            valueView.setTextSize(20);
+            valueView.setText(String.valueOf(value));
+            valueView.setGravity(Gravity.RIGHT);
+            valueView.setPadding(0,0,20,0);
+            editTextArray.put(unit.getKey(),valueView);
+            newUnitLayout.addView(valueView);
 
-            TextView titleView = new TextView(this);
-            titleView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.2f));
-            titleView.setTextSize(20);
-            titleView.setText(unit.getKey());
-            titleView.setGravity(Gravity.CENTER_VERTICAL);
-            newUnitLayout.addView(titleView);
+            TextView unitView = new TextView(this);
+            unitView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.3f));
+            unitView.setTextSize(20);
+            unitView.setText(unit.getKey());
+            unitView.setGravity(Gravity.CENTER_VERTICAL);
+            newUnitLayout.addView(unitView);
 
             linearLayout.addView(newUnitLayout);
         }
