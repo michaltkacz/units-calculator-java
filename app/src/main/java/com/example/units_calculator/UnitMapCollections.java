@@ -103,4 +103,11 @@ public class UnitMapCollections {
             put("Square inch",  0.00064516);
         }
     };
+    public static HashMap<String,Double> temperatureUnitDictionary = new HashMap<String,Double>() {
+        {
+            put("F", 3.0);
+            put("K", 2.0);
+            put("C", 1.0);
+        }
+    };
 }

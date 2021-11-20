@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
         UnitMapCollections.setTitle("Time units");
         StartNewView(view);
     }
+    public void GoToTemperatureView(View view) {
+        UnitMapCollections.setCurrentUnitKind(UnitMapCollections.temperatureUnitDictionary);
+        UnitMapCollections.setTitle("Temperature");
+        StartNewView(view);
+    }
     public void StartNewView(View view){
         Intent intent = new Intent(this, CalculationActivity.class);
         startActivity(intent);

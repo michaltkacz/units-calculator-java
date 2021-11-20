@@ -152,6 +152,25 @@
                     android:text="@string/speed_button"
                     android:textSize="20dp" />
             </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="GoToTemperatureView">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:paddingLeft="12dp"
+                    android:src="@drawable/ic_baseline_device_thermostat_96" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="@string/temperature_button"
+                    android:textSize="20dp" />
+            </TableRow>
 
         </TableLayout>
 

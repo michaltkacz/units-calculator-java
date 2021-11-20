@@ -50,8 +50,15 @@ public class CalculationActivity extends AppCompatActivity {
 
     private void UpdateAllTextValues(){
         for (Map.Entry<String,TextView> unit : editTextArray.entrySet()){
-            unit.getValue().setText(String.format("%.8f",unitCalculator.Calculate(value,defaultUnit, String.valueOf(unit.getKey()))));
+            unit.getValue().setText(String.format("%.8f",CalculateNewValue(value,defaultUnit, String.valueOf(unit.getKey()))));
         }
+    }
+
+    private double CalculateNewValue(double currentValue,String oldValue, String newValue){
+        if(UnitMapCollections.getTitle() == "Temperature")
+            return unitCalculator.CalculateTemp(currentValue,oldValue,newValue);
+
+        return unitCalculator.Calculate(currentValue,oldValue,newValue);
     }
 
     private void AddListenerToSpinner(Spinner spinner){
@@ -60,7 +67,8 @@ public class CalculationActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedUnit = UnitMapCollections.getCurrentUnitKind().keySet().toArray()[position].toString();
                 try {
-                    value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),selectedUnit,defaultUnit);
+                     value = CalculateNewValue(Double.parseDouble(String.valueOf(editText.getText())),selectedUnit,defaultUnit);
+
                 } catch (Exception e) {
                     value = 0;
                     System.out.println(e.getMessage());
@@ -85,7 +93,7 @@ public class CalculationActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
-                    value = unitCalculator.Calculate(Double.parseDouble(String.valueOf(editText.getText())),selectedUnit,defaultUnit);
+                    value = CalculateNewValue(Double.parseDouble(String.valueOf(editText.getText())),selectedUnit,defaultUnit);
                 } catch (Exception e) {
                     value = 0;
                     System.out.println(e.getMessage());
@@ -120,20 +128,12 @@ public class CalculationActivity extends AppCompatActivity {
             LinearLayout newUnitLayout = new LinearLayout(this);
             newUnitLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-            TextView valueView = new TextView(this);
-            valueView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.7f));
-            valueView.setTextSize(20);
-            valueView.setText(String.valueOf(value));
-            valueView.setGravity(Gravity.RIGHT);
-            valueView.setPadding(0,0,20,0);
+            TextView valueView = new MyUnitTextValue(this, String.valueOf(value));
             editTextArray.put(unit.getKey(),valueView);
             newUnitLayout.addView(valueView);
 
-            TextView unitView = new TextView(this);
+            TextView unitView = new MyUnitTextView(this,unit.getKey());
             unitView.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,0.3f));
-            unitView.setTextSize(20);
-            unitView.setText(unit.getKey());
-            unitView.setGravity(Gravity.CENTER_VERTICAL);
             newUnitLayout.addView(unitView);
 
             linearLayout.addView(newUnitLayout);
