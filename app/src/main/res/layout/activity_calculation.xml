@@ -15,7 +15,7 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/purple_700"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -23,9 +23,9 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
+                android:onClick="GoToMainPage"
                 android:src="@drawable/ic_baseline_arrow_back_96"
-                android:tint="#FFFFFF"
-                android:onClick="GoToMainPage"/>
+                android:tint="#FFFFFF" />
 
             <TextView
                 android:id="@+id/Title"

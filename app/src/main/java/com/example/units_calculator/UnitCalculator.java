@@ -38,21 +38,26 @@ public class UnitCalculator implements IUnitCalculator{
                 return KelvinToCelsius(value);
             case "CK":
                 return CelsiusToKelvin(value);
+            default:
+                return value;
         }
-        return value;
     }
+
     private double CelsiusToKelvin(double value){
         return value + 273.15;
     }
     private double KelvinToCelsius(double value){
         return value - 273.15;
     }
+
     private double CelsiusToFahrenheit(double value){
         return value * 9/5 + 32;
     }
+
     private double FahrenheitToCelsius(double value){
         return (value-32) * 5/9;
     }
+
     private double KelvinToFahrenheit(double value){
         return CelsiusToFahrenheit(KelvinToCelsius(value));
     }
