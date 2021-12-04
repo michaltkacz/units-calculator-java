@@ -1,7 +1,6 @@
 package com.example.units_calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,37 +17,42 @@ public class MainActivity extends AppCompatActivity {
 
     public void GoToLengthView(View view) {
         UnitMapCollections.setCurrentUnitKind(UnitMapCollections.lengthUnitDictionary);
-        UnitMapCollections.setTitle("Length units");
+        UnitMapCollections.setTitle("Length");
         StartNewView(view);
     }
 
     public void GoToAreaView(View view) {
         UnitMapCollections.setCurrentUnitKind(UnitMapCollections.areaUnitDictionary);
-        UnitMapCollections.setTitle("Area units");
+        UnitMapCollections.setTitle("Area");
         StartNewView(view);
     }
 
     public void GoToVolumeView(View view) {
         UnitMapCollections.setCurrentUnitKind(UnitMapCollections.volumeUnitDictionary);
-        UnitMapCollections.setTitle("Volume units");
+        UnitMapCollections.setTitle("Volume");
         StartNewView(view);
     }
 
     public void GoToMassView(View view) {
         UnitMapCollections.setCurrentUnitKind(UnitMapCollections.massUnitDictionary);
-        UnitMapCollections.setTitle("Mass units");
+        UnitMapCollections.setTitle("Mass");
         StartNewView(view);
     }
 
     public void GoToSpeedView(View view) {
         UnitMapCollections.setCurrentUnitKind(UnitMapCollections.speedUnitDictionary);
-        UnitMapCollections.setTitle("Speed units");
+        UnitMapCollections.setTitle("Speed");
         StartNewView(view);
     }
 
     public void GoToTimeView(View view) {
         UnitMapCollections.setCurrentUnitKind(UnitMapCollections.timeUnitDictionary);
-        UnitMapCollections.setTitle("Time units");
+        UnitMapCollections.setTitle("Time");
+        StartNewView(view);
+    }
+    public void GoToTemperatureView(View view) {
+        UnitMapCollections.setCurrentUnitKind(UnitMapCollections.temperatureUnitDictionary);
+        UnitMapCollections.setTitle("Temperature");
         StartNewView(view);
     }
     public void StartNewView(View view){

@@ -78,15 +78,15 @@ public class UnitMapCollections {
     public static HashMap<String,Double> timeUnitDictionary = new HashMap<String,Double>() {
         {
             put("s", 1.0);
-            put("ms", 0.0001);
-            put("μs", 0.0000001);
-            put("ns", 1.0000000001);
+            put("ms", 0.001);
+            put("μs", 0.000001);
+            put("ns", 0.000000001);
             put("Min", 60.0);
             put("Hour", 3600.0);
             put("Day", 86400.0);
             put("Week", 604800.0);
             put("Month", 2629800.0);
-            put("Month", 31557600.0);
+            put("Year", 31557600.0);
         }
     };
 
@@ -101,6 +101,13 @@ public class UnitMapCollections {
             put("Square yard",  0.836127);
             put("Square foot",  0.092903);
             put("Square inch",  0.00064516);
+        }
+    };
+    public static HashMap<String,Double> temperatureUnitDictionary = new HashMap<String,Double>() {
+        {
+            put("F", 3.0);
+            put("K", 2.0);
+            put("C", 1.0);
         }
     };
 }

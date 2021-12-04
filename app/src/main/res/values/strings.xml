@@ -6,4 +6,5 @@
     <string name="mass_button">Mass</string>
     <string name="time_button">Time</string>
     <string name="speed_button">Speed</string>
+    <string name="temperature_button">Temperature</string>
 </resources>
